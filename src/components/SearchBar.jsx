@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "../styles/components.css";
 import ImageModal from "./ImageModal"; // You need to create this component as described
+import { buildApiUrl } from "../utils/apiBaseUrl";
 
 export default function SearchBar({ placeholder }) {
   const [query, setQuery] = useState("");
@@ -14,7 +15,9 @@ export default function SearchBar({ placeholder }) {
     if (!query.trim()) return;
     setLoading(true);
     try {
-      const res = await fetch(`/api/search/nasa/?q=${encodeURIComponent(query)}`);
+      const res = await fetch(
+        buildApiUrl(`/api/search/nasa/?q=${encodeURIComponent(query)}`)
+      );
       const data = await res.json();
       const images = Array.isArray(data) ? data : data.results || [];
       setResults(images);
