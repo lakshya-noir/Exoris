@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.pyc
+
+# Django  
+db.sqlite3
+*.log
+
+# Virtual environment
+venv/
+env/
+
+# Media
+media/
+tiles/
+
+# IDE
+.vscode/
+.idea/
+fresh-backend/
+
+node_modules/
+node_modules/.cache/
+build/
+.env
+
+node_modules/
+node_modules/.cache/
+
+node_modules/
+node_modules/.cache/
+
+node_modules/
+node_modules/.cache/

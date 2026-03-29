@@ -1,0 +1,91 @@
+body {
+    margin: 0;
+    font-family: 'Exo 2', sans-serif;
+    overflow: hidden; /* Prevent scrollbars */
+    background-color: #000; /* This line fixes the white gap */
+}
+
+.header-title {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    margin: 0;
+    font-size: 4.5rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.9);
+    text-shadow: 0 0 10px rgba(0, 255, 255, 0.7), 0 0 20px rgba(0, 255, 255, 0.5);
+    pointer-events: none;
+    text-transform: uppercase;
+}
+
+.home-button {
+    position: absolute;
+    top: 22px;
+    right: 24px;
+    z-index: 120;
+    text-decoration: none;
+    color: #f3f7ff;
+    border: 1px solid rgba(146, 194, 255, 0.45);
+    background: rgba(8, 17, 36, 0.72);
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    letter-spacing: 0.03em;
+    transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+}
+
+.home-button:hover {
+    transform: translateY(-2px);
+    border-color: rgba(88, 228, 255, 0.85);
+    box-shadow: 0 8px 24px rgba(0, 153, 255, 0.22);
+}
+
+#globeViz {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform: translateY(50px);
+}
+
+/* Styling for the satellite information box */
+#satellite-info {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: rgba(0, 0, 0, 0.85);
+    color: white;
+    padding: 25px;
+    border-radius: 10px;
+    width: 320px;
+    display: none; /* Hidden by default */
+    border: 1px solid #777;
+    text-align: center;
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+}
+
+#satellite-info h3 {
+    margin-top: 0;
+    color: #00ffff; /* Cyan color for the title */
+}
+
+#satellite-info button {
+    margin-top: 15px;
+    padding: 8px 15px;
+    border-radius: 5px;
+    border: 1px solid #00ffff;
+    cursor: pointer;
+    background-color: transparent;
+    color: #00ffff;
+    transition: background-color 0.3s, color 0.3s;
+    font-family: 'Exo 2', sans-serif;
+}
+
+#satellite-info button:hover {
+    background-color: #00ffff;
+    color: black;
+}

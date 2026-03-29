@@ -1,0 +1,29 @@
+.search-box {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1.5px solid #aaa;
+  border-radius: 3px;
+  padding: 6px 16px;
+  min-width: 200px;
+  max-width: 320px;
+  width: 100%;
+  color: #e0e0e0;
+  font-family: 'Courier New', Courier, monospace;
+  backdrop-filter: blur(6px);
+}
+
+.search-icon {
+  margin-right: 15px;
+  font-size: 1.2em;
+}
+
+.search-input {
+  background: transparent;
+  border: none;
+  color: #e0e0e0;
+  font-size: 1em;
+  outline: none;
+  width: 100%;
+  font-family: inherit;
+}
