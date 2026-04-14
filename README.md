@@ -133,7 +133,7 @@ Because `package.json` defines `"proxy": "http://localhost:8000"`, frontend requ
 Base URL (local): `http://127.0.0.1:8000`
 
 - `GET /` - API root with endpoint listing
-- `GET /api/search/nasa/?q=<query>&limit=<n>` - NASA image search
+- `GET /api/search/nasa/?q=<query>&limit=<n>&page=<p>` - NASA image search (with pagination)
 - `GET /api/nasa/image/<nasa_id>/` - NASA image details from cached results
 - `GET /api/search/popular/` - most popular search terms
 - `GET /api/nasa/apod/?date=YYYY-MM-DD` - APOD (date optional)
@@ -187,7 +187,6 @@ From `nasa-backend/`:
 - Add authentication for user annotations
 - Move secrets to environment variables and `.env` files
 - Add test coverage for backend endpoints and React components
-- Improve caching and pagination for large NASA query result sets
 - Add deployment configs (Docker + cloud hosting)
 
 ## License
