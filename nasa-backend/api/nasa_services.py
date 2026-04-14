@@ -22,7 +22,7 @@ class NASAImageSearchService:
             search_obj.save()
 
         offset = (page - 1) * limit
-        existing = NASASearchResult.objects.filter(search_query__icontains=query.lower())[offset:offset+limit]
+        existing = NASASearchResult.objects.filter(search_query__icontains=query.lower()).order_by('id')[offset:offset+limit]
         if len(existing) >= limit:
             return [self.result_to_dict(r) for r in existing]
 
