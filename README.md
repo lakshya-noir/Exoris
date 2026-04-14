@@ -191,4 +191,4 @@ From `nasa-backend/`:
 
 ## License
 
-Add your preferred license (MIT/Apache-2.0/etc.) in a `LICENSE` file.
+This project is open source and available under the [MIT License](LICENSE).
