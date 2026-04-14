@@ -1,22 +1,37 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../styles/components.css";
 import ImageModal from "./ImageModal"; // You need to create this component as described
 import { buildApiUrl } from "../utils/apiBaseUrl";
 
-export default function SearchBar({ placeholder }) {
+export default function SearchBar({ placeholder, onSearchActive }) {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState([]);
   const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
   const [modalImageUrl, setModalImageUrl] = useState("");
+  const [modalTitle, setModalTitle] = useState("");
+  const [modalDesc, setModalDesc] = useState("");
+  const [page, setPage] = useState(1);
 
-  const handleSearch = async (e) => {
-    e.preventDefault();
+  useEffect(() => {
+    if (onSearchActive) {
+      onSearchActive(results.length > 0 || loading);
+    }
+  }, [results, loading, onSearchActive]);
+
+  const handleSearch = async (e, targetPage = 1) => {
+    if (e) e.preventDefault();
     if (!query.trim()) return;
+    
+    // Auto-scroll the scrollable container to the top smoothly right away
+    const scrollContainer = document.querySelector(".home-page") || document.documentElement;
+    scrollContainer.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+
     setLoading(true);
+    setPage(targetPage);
     try {
       const res = await fetch(
-        buildApiUrl(`/api/search/nasa/?q=${encodeURIComponent(query)}`)
+        buildApiUrl(`/api/search/nasa/?q=${encodeURIComponent(query)}&page=${targetPage}`)
       );
       const data = await res.json();
       const images = Array.isArray(data) ? data : data.results || [];
@@ -32,10 +47,13 @@ export default function SearchBar({ placeholder }) {
   const handleClear = () => {
     setQuery("");
     setResults([]);
+    setPage(1);
   };
 
-  const handleImageClick = (url) => {
-    setModalImageUrl(url);
+  const handleImageClick = (item) => {
+    setModalImageUrl(item.image_url || item.thumbnail_url);
+    setModalTitle(item.title);
+    setModalDesc(item.description);
     setModalOpen(true);
   };
 
@@ -63,7 +81,12 @@ export default function SearchBar({ placeholder }) {
         )}
       </form>
 
-      {loading && <p className="loading-text">Loading...</p>}
+      {loading && (
+        <div className="search-loader">
+          <div className="spinner"></div>
+          <p className="loading-text">Exploring the cosmos...</p>
+        </div>
+      )}
 
       {results.length > 0 && (
         <div className="results-background">
@@ -72,7 +95,7 @@ export default function SearchBar({ placeholder }) {
               <div
                 key={item.nasa_id}
                 className="image-card"
-                onClick={() => handleImageClick(item.image_url || item.thumbnail_url)}
+                onClick={() => handleImageClick(item)}
                 style={{ cursor: "zoom-in" }}
               >
                 <img
@@ -82,14 +105,31 @@ export default function SearchBar({ placeholder }) {
                 />
                 <div className="image-info">
                   <h4>{item.title}</h4>
-                  <p>
-                    {item.description && item.description.length > 150
-                      ? item.description.slice(0, 150) + "..."
-                      : item.description}
-                  </p>
+                  <p className="clamped-desc">{item.description}</p>
                 </div>
               </div>
             ))}
+          </div>
+          <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', marginTop: '24px' }}>
+            <button
+              type="button"
+              className="search-button"
+              disabled={page === 1}
+              onClick={() => handleSearch(null, page - 1)}
+              style={page === 1 ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
+            >
+              Previous Page
+            </button>
+            <span style={{ color: 'white', alignSelf: 'center' }}>Page {page}</span>
+            <button
+              type="button"
+              className="search-button"
+              disabled={results.length < 20}
+              onClick={() => handleSearch(null, page + 1)}
+              style={results.length < 20 ? { opacity: 0.5, cursor: 'not-allowed' } : {}}
+            >
+              Next Page
+            </button>
           </div>
         </div>
       )}
@@ -98,6 +138,8 @@ export default function SearchBar({ placeholder }) {
         isOpen={modalOpen}
         onRequestClose={() => setModalOpen(false)}
         imageUrl={modalImageUrl}
+        title={modalTitle}
+        description={modalDesc}
       />
     </div>
   );

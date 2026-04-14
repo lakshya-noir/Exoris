@@ -74,3 +74,34 @@
   border: none;
   color: white;
 }
+
+.modal-info-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(10, 15, 30, 0.85);
+  color: #eeeeee;
+  padding: 24px 34px;
+  max-height: 40vh;
+  overflow-y: auto;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  backdrop-filter: blur(12px);
+  z-index: 20;
+}
+
+.modal-info-title {
+  margin-top: 0;
+  margin-bottom: 12px;
+  font-size: 1.4rem;
+  color: #00fff9;
+  font-family: "Audiowide", "Orbitron", sans-serif;
+  letter-spacing: 0.05em;
+}
+
+.modal-info-desc {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+}

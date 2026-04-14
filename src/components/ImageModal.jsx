@@ -12,7 +12,7 @@ import "./ImageModal.css";
 
 ReactModal.setAppElement("#root");
 
-export default function ImageModal({ isOpen, onRequestClose, imageUrl }) {
+export default function ImageModal({ isOpen, onRequestClose, imageUrl, title, description }) {
   const [angle, setAngle] = useState(0);
 
   const rotateLeft = () => setAngle((prev) => prev - 90);
@@ -78,6 +78,13 @@ export default function ImageModal({ isOpen, onRequestClose, imageUrl }) {
           )}
         </TransformWrapper>
       </div>
+
+      {(title || description) && (
+        <div className="modal-info-overlay">
+          {title && <h2 className="modal-info-title">{title}</h2>}
+          {description && <p className="modal-info-desc">{description}</p>}
+        </div>
+      )}
     </ReactModal>
   );
 }

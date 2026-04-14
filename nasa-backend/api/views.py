@@ -157,10 +157,11 @@ from .models import NASASearchResult
 def search_nasa_images(request):
     """
     Search NASA images by keyword
-    GET /api/search/nasa/?q=mercury&limit=20
+    GET /api/search/nasa/?q=mercury&limit=20&page=1
     """
     query = request.GET.get('q', '').strip()
     limit = min(int(request.GET.get('limit', 20)), 50)  # Max 50 results
+    page = int(request.GET.get('page', 1))
     
     if not query:
         return Response({
@@ -174,11 +175,12 @@ def search_nasa_images(request):
     
     # Use our NASA search service
     search_service = NASAImageSearchService()
-    results = search_service.search_images(query, limit)
+    results = search_service.search_images(query, limit, page)
     
     return Response({
         'query': query,
         'count': len(results),
+        'page': page,
         'results': results
     })
 

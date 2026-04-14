@@ -12,22 +12,23 @@ class NASAImageSearchService:
     def __init__(self):
         self.api_key = getattr(settings, 'NASA_API_KEY', 'DEMO_KEY')
 
-    def search_images(self, query, limit=20):
+    def search_images(self, query, limit=20, page=1):
         if 'mars' in query.lower():
-            return self.fetch_mars_rover_images(limit)
+            return self.fetch_mars_rover_images(limit, page)
 
         search_obj, created = SearchQuery.objects.get_or_create(query=query.lower())
-        if not created:
+        if not created and page == 1:
             search_obj.search_count += 1
             search_obj.save()
 
-        existing = NASASearchResult.objects.filter(search_query__icontains=query.lower())[:limit]
-        if existing.exists():
+        offset = (page - 1) * limit
+        existing = NASASearchResult.objects.filter(search_query__icontains=query.lower())[offset:offset+limit]
+        if len(existing) >= limit:
             return [self.result_to_dict(r) for r in existing]
 
-        return self.fetch_from_nasa(query, limit)
+        return self.fetch_from_nasa(query, limit, page)
 
-    def fetch_mars_rover_images(self, limit=20):
+    def fetch_mars_rover_images(self, limit=20, page=1):
         rovers = ['curiosity', 'perseverance', 'opportunity']
         results = []
         per_rover = max(1, limit // len(rovers))
@@ -36,7 +37,7 @@ class NASAImageSearchService:
                 break
             url = f"https://api.nasa.gov/mars-photos/api/v1/rovers/{rover}/latest_photos"
             try:
-                response = requests.get(url, params={'api_key': self.api_key}, timeout=15)
+                response = requests.get(url, params={'api_key': self.api_key, 'page': page}, timeout=15)
                 response.raise_for_status()
                 data = response.json()
                 photos = data.get('latest_photos', [])[:per_rover]
@@ -104,9 +105,9 @@ class NASAImageSearchService:
                 return kws
         return None
 
-    def fetch_from_nasa(self, query, limit=20):
+    def fetch_from_nasa(self, query, limit=20, page=1):
         url = "https://images-api.nasa.gov/search"
-        params = {'q': query, 'media_type': 'image', 'page_size': limit * 3}
+        params = {'q': query, 'media_type': 'image', 'page': page, 'page_size': limit * 3}
         kws = self.get_scientific_keywords(query)
         if kws:
             params['keywords'] = kws

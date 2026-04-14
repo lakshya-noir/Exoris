@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import SearchBar from "../components/SearchBar";
 import "../styles/components.css";
 import { Link } from "react-router-dom";
@@ -246,8 +246,11 @@ function SpaceBackgroundCanvas() {
   return <canvas ref={canvasRef} className="space-canvas-bg" aria-hidden="true" />;
 }
 
-const Home = () => (
-  <div className="star-background home-page">
+const Home = () => {
+  const [isSearchActive, setIsSearchActive] = useState(false);
+
+  return (
+    <div className="star-background home-page">
     <SpaceBackgroundCanvas />
 
     <nav className="home-nav">
@@ -277,15 +280,18 @@ const Home = () => (
           presentations.
         </p>
         <div className="home-search-wrap">
-          <SearchBar placeholder="Search celestial bodies..." />
+          <SearchBar placeholder="Search celestial bodies..." onSearchActive={setIsSearchActive} />
         </div>
       </section>
     </main>
 
-    <div className="home-footer-note">
-      <span>Data and media sourced from NASA APIs</span>
-    </div>
+    {!isSearchActive && (
+      <div className="home-footer-note">
+        <span>Data and media sourced from NASA APIs</span>
+      </div>
+    )}
   </div>
-);
+  );
+};
 
 export default Home;

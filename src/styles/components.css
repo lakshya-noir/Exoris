@@ -23,7 +23,8 @@ html, body, #root {
   height: 100vh;
   background: black;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 /* Navbar container */
@@ -188,8 +189,6 @@ html, body, #root {
   margin: 30px auto 30px 40px; /* top auto bottom left — shifts container left */
   padding: 24px 16px;
   box-sizing: border-box;
-  max-height: 80vh;
-  overflow-y: auto;
 }
 
 /* This ensures the results section stays left-aligned on all devices */
@@ -237,8 +236,6 @@ html, body, #root {
   margin: 30px 0 30px 0;
   padding: 24px 16px;
   box-sizing: border-box;
-  max-height: 80vh;
-  overflow-y: auto;
   position: static;
   float: none;
 }
@@ -587,7 +584,7 @@ html, body, #root {
   position: relative;
   z-index: 2;
   width: 100%;
-  height: calc(100vh - 140px);
+  min-height: calc(100vh - 140px);
   display: flex;
   align-items: flex-start;
   justify-content: center;
@@ -676,8 +673,7 @@ html, body, #root {
   min-width: 0;
   margin: 18px 0 0;
   padding: 16px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  overflow: visible;
 }
 
 .home-search-wrap .image-grid {
@@ -758,4 +754,45 @@ html, body, #root {
     text-align: center;
     margin-top: 8px;
   }
+}
+
+/* Loading animation styles */
+.search-loader {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 32px 0;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(0, 255, 249, 0.2);
+  border-left-color: #00fff9;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-bottom: 16px;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Text truncating for uniform cards */
+.clamped-desc {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  line-height: 1.4;
+  font-size: 0.9rem;
+  color: #ccc;
 }
