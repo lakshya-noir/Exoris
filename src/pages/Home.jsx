@@ -254,7 +254,7 @@ const Home = () => {
     <SpaceBackgroundCanvas />
 
     <nav className="home-nav">
-      <span className="home-brand">Exoris</span>
+      <span className="home-brand">CosmoView</span>
       <div className="home-nav-actions">
         <Link className="home-nav-link" to="/solar-system">
           Solar System 3D

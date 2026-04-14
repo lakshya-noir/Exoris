@@ -1,6 +1,6 @@
-# Exoris - NASA Media Explorer
+# CosmoView - NASA Media Explorer
 
-Exoris is an interactive space exploration app built during the NASA Space Apps challenge context. It combines:
+CosmoView is an interactive space exploration app built during the NASA Space Apps challenge context. It combines:
 
 - a React frontend for immersive exploration,
 - a Django REST backend for NASA-powered search and data APIs,
@@ -43,7 +43,7 @@ The project is designed for fast visual discovery of celestial imagery and educa
 ## Project Structure
 
 ```text
-exoris/
+cosmoview/
 ├─ src/                           # React app
 │  ├─ App.jsx                     # Main router
 │  ├─ pages/Home.jsx              # Landing page + search entry
@@ -82,7 +82,7 @@ Run frontend and backend in separate terminals.
 
 ```bash
 git clone <your-repo-url>
-cd exoris
+cd cosmoview
 npm install
 ```
 
@@ -114,7 +114,7 @@ Backend will run at `http://127.0.0.1:8000`.
 In a new terminal:
 
 ```bash
-cd exoris
+cd cosmoview
 npm start
 ```
 
